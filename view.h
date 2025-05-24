@@ -4,17 +4,16 @@
 #include <QWidget>
 #include <QLabel>
 #include <QVBoxLayout>
-
-class View : public QWidget {
+#include "TransparentLabel.h"
+class View : public QObject {
     Q_OBJECT
 
 public:
     View(QWidget* parent = nullptr);
 
-    void updateLabel(int value); // interfaz para actualizar la vista
+    void updateLabel(QString&); // interfaz para actualizar la vista
 
-private:
-    QLabel* label;
+    TransparentLabel* label;
 };
 
 #endif // VIEW_H

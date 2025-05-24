@@ -2,6 +2,7 @@
 #define MODEL_H
 
 #include <common.h>
+#include <iostream>
 #include <QObject>
 #include <QTimer>
 
@@ -10,12 +11,17 @@
 #include "common-sdl.h"
 #include "whisper.h"
 
+#include <QObject>
+#include <QThread>
+#include <QDebug>
+
+
 struct whisper_params {
     int32_t n_threads  = std::min(4, (int32_t) std::thread::hardware_concurrency());
     int32_t step_ms    = 3000;
     int32_t length_ms  = 10000;
     int32_t keep_ms    = 200;
-    int32_t capture_id = -1;
+    int32_t capture_id = 1;
     int32_t max_tokens = 32;
     int32_t audio_ctx  = 0;
     int32_t beam_size  = -1;
@@ -44,19 +50,43 @@ class Model : public QObject {
 
 public:
     Model(QObject* parent = nullptr);
-
     void start(); // inicia el loop
-    int setup_capture();
-    int audio_iteration();
-    signals:
-        void dataUpdated(int value); // señal que emite datos nuevos
+    QString get_last_transcription(){return last_transcription;}
 
-private slots:
-    void update(); // función llamada por el timer
+
+private
+    slots:
+    void handleMessage(const QString &msg) {
+        qDebug() << "handle mensaje";
+    std::cout << msg.toStdString() << std::endl;
+    last_transcription = msg;
+    emit update();
+    }
+    signals:
+        void update();
 
 private:
-    QTimer timer;
-    int counter = 0;
+    QThread workerThread;
+    QString last_transcription;
+
+};
+
+
+class Worker : public QObject
+{
+    Q_OBJECT
+public:
+    explicit Worker(QObject *parent = nullptr) : QObject(parent) {setup_capture();}
+    int setup_capture();
+
+public slots:
+    void doWork();
+    signals:
+    void conditionMessage(const QString &message);
+
+private:
+
+
     whisper_params params;
     wav_writer wavWriter;
 
@@ -80,7 +110,6 @@ private:
     std::ofstream fout;
 
     struct whisper_context *ctx;
-
 };
 
 #endif // MODEL_H

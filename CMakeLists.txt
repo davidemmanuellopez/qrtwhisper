@@ -18,9 +18,16 @@ add_executable(${PROJECT_NAME}
         model.cpp model.h
         controller.cpp controller.h
         view.cpp view.h
+        TransparentLabel.h
 )
 
 
+
+set(GGML_CUDA 1)
+set(CMAKE_CUDA_ARCHITECTURES "86")
+set(WHISPER_SDL2 ON)
+
+set(CMAKE_CUDA_COMPILER /usr/local/cuda-12.9/bin/nvcc)
 
 add_subdirectory(extern/whisper.cpp)
 

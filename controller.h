@@ -13,7 +13,7 @@ public:
     Controller(Model* model, View* view, QObject* parent = nullptr);
 
 private slots:
-    void handleDataUpdate(int value);
+    void handleDataUpdate();
 
 private:
     Model* m_model;
