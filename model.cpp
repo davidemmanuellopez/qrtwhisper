@@ -12,8 +12,10 @@
 #include <thread>
 #include <vector>
 
+
 Model::Model(QObject* parent) : QObject(parent) {
     connect(&timer, &QTimer::timeout, this, &Model::update);
+    setup_capture();
 }
 
 void Model::start() {
@@ -25,7 +27,7 @@ void Model::update() {
     emit dataUpdated(counter); // emite señal con nuevo valor
 }
 
-void Model::start_capture_loop()
+int Model::setup_capture()
 {
 
     whisper_params params;
@@ -40,10 +42,10 @@ void Model::start_capture_loop()
     params.keep_ms   = std::min(params.keep_ms,   params.step_ms);
     params.length_ms = std::max(params.length_ms, params.step_ms);
 
-    const int n_samples_step = (1e-3*params.step_ms  )*WHISPER_SAMPLE_RATE;
-    const int n_samples_len  = (1e-3*params.length_ms)*WHISPER_SAMPLE_RATE;
-    const int n_samples_keep = (1e-3*params.keep_ms  )*WHISPER_SAMPLE_RATE;
-    const int n_samples_30s  = (1e-3*30000.0         )*WHISPER_SAMPLE_RATE;
+    n_samples_step = (1e-3*params.step_ms  )*WHISPER_SAMPLE_RATE;
+    n_samples_len  = (1e-3*params.length_ms)*WHISPER_SAMPLE_RATE;
+    n_samples_keep = (1e-3*params.keep_ms  )*WHISPER_SAMPLE_RATE;
+    n_samples_30s  = (1e-3*30000.0         )*WHISPER_SAMPLE_RATE;
 
     const bool use_vad = n_samples_step <= 0; // sliding window mode uses VAD
 
@@ -55,18 +57,18 @@ void Model::start_capture_loop()
 
     // init audio
 
-    audio_async audio(params.length_ms);
-    if (!audio.init(params.capture_id, WHISPER_SAMPLE_RATE)) {
+    audio = new audio_async(params.length_ms);
+    if (!audio->init(params.capture_id, WHISPER_SAMPLE_RATE)) {
         fprintf(stderr, "%s: audio.init() failed!\n", __func__);
         return 1;
     }
 
-    audio.resume();
+    audio->resume();
 
     // whisper init
     if (params.language != "auto" && whisper_lang_id(params.language.c_str()) == -1){
         fprintf(stderr, "error: unknown language '%s'\n", params.language.c_str());
-        whisper_print_usage(argc, argv, params);
+        //whisper_print_usage(argc, argv, params);
         exit(0);
     }
 
@@ -75,13 +77,10 @@ void Model::start_capture_loop()
     cparams.use_gpu    = params.use_gpu;
     cparams.flash_attn = params.flash_attn;
 
-    struct whisper_context * ctx = whisper_init_from_file_with_params(params.model.c_str(), cparams);
+    ctx = whisper_init_from_file_with_params(params.model.c_str(), cparams);
 
-    std::vector<float> pcmf32    (n_samples_30s, 0.0f);
-    std::vector<float> pcmf32_old;
-    std::vector<float> pcmf32_new(n_samples_30s, 0.0f);
-
-    std::vector<whisper_token> prompt_tokens;
+    pcmf32=std::vector<float>(n_samples_30s, 0.0f);
+    pcmf32_new=std::vector<float>(n_samples_30s, 0.0f);
 
     // print some info about the processing
     {
@@ -115,9 +114,7 @@ void Model::start_capture_loop()
 
     int n_iter = 0;
 
-    bool is_running = true;
-
-    std::ofstream fout;
+    is_running = true;
     if (params.fname_out.length() > 0) {
         fout.open(params.fname_out);
         if (!fout.is_open()) {
@@ -126,7 +123,6 @@ void Model::start_capture_loop()
         }
     }
 
-    wav_writer wavWriter;
     // save wav file
     if (params.save_audio) {
         // Get current date/time for filename
@@ -140,11 +136,23 @@ void Model::start_capture_loop()
     printf("[Start speaking]\n");
     fflush(stdout);
 
-    auto t_last  = std::chrono::high_resolution_clock::now();
+    t_last  = std::chrono::high_resolution_clock::now();
     const auto t_start = t_last;
 
-    // main audio loop
-    while (is_running) {
+
+    audio->pause();
+
+    whisper_print_timings(ctx);
+    whisper_free(ctx);
+
+    return 0;
+
+}
+
+
+int Model::audio_iteration() {
+       // main audio loop
+        main_loop:
         if (params.save_audio) {
             wavWriter.write(pcmf32_new.data(), pcmf32_new.size());
         }
@@ -152,28 +160,29 @@ void Model::start_capture_loop()
         is_running = sdl_poll_events();
 
         if (!is_running) {
-            break;
+            return 0;
         }
 
         // process new audio
 
         if (!use_vad) {
             while (true) {
+                start:
                 // handle Ctrl + C
                 is_running = sdl_poll_events();
                 if (!is_running) {
                     break;
                 }
-                audio.get(params.step_ms, pcmf32_new);
+                audio->get(params.step_ms, pcmf32_new);
 
                 if ((int) pcmf32_new.size() > 2*n_samples_step) {
                     fprintf(stderr, "\n\n%s: WARNING: cannot process audio fast enough, dropping audio ...\n\n", __func__);
-                    audio.clear();
-                    continue;
+                    audio->clear();
+                    goto start;
                 }
 
                 if ((int) pcmf32_new.size() >= n_samples_step) {
-                    audio.clear();
+                    audio->clear();
                     break;
                 }
 
@@ -203,17 +212,17 @@ void Model::start_capture_loop()
             if (t_diff < 2000) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-                continue;
+                goto main_loop;
             }
 
-            audio.get(2000, pcmf32_new);
+            audio->get(2000, pcmf32_new);
 
             if (::vad_simple(pcmf32_new, WHISPER_SAMPLE_RATE, 1000, params.vad_thold, params.freq_thold, false)) {
-                audio.get(params.length_ms, pcmf32);
+                audio->get(params.length_ms, pcmf32);
             } else {
                 std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-                continue;
+                goto main_loop;
             }
 
             t_last = t_now;
@@ -246,7 +255,7 @@ void Model::start_capture_loop()
             wparams.prompt_n_tokens  = params.no_context ? 0       : prompt_tokens.size();
 
             if (whisper_full(ctx, wparams, pcmf32.data(), pcmf32.size()) != 0) {
-                fprintf(stderr, "%s: failed to process audio\n", argv[0]);
+                //fprintf(stderr, "%s: failed to process audio\n", argv[0]);
                 return 6;
             }
 
@@ -283,8 +292,8 @@ void Model::start_capture_loop()
                         const int64_t t0 = whisper_full_get_segment_t0(ctx, i);
                         const int64_t t1 = whisper_full_get_segment_t1(ctx, i);
 
-                        std::string output = "[" + to_timestamp(t0, false) + " --> " + to_timestamp(t1, false) + "]  " + text;
-
+                        //std::string output = "[" + to_timestamp(t0, false) + " --> " + to_timestamp(t1, false) + "]  " + text;
+                        std::string output = text;
                         if (whisper_full_get_segment_speaker_turn_next(ctx, i)) {
                             output += " [SPEAKER_TURN]";
                         }
@@ -333,13 +342,4 @@ void Model::start_capture_loop()
             }
             fflush(stdout);
         }
-    }
-
-    audio.pause();
-
-    whisper_print_timings(ctx);
-    whisper_free(ctx);
-
-    return 0;
-
 }
