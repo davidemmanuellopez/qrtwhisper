@@ -15,7 +15,7 @@ System Settings -> Window Behavior-> Focus
 For now the application get focus for every transcription, you cannot hold keyboard focus. This its
 functional for a interview when not its need to use desktop actively.
 
-[example]: img.png "Example"
+![example](img.png)
 
 
 ## Instructions
