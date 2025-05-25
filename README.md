@@ -53,7 +53,7 @@ https://developer.nvidia.com/cuda-downloads
 On Debian based linux distributions:
 * sudo apt-get install libsdl2-dev
 
-** Whisper.cpp its handled by git and the CMake project, as a sub_module **
+** Whisper.cpp its handled by git and the CMake project, as a submodule **
 
 ### Build the CMake project and build the source.
 ### Download models
