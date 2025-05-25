@@ -40,7 +40,7 @@ On Fedora Linux:
 Install SDL2 on Mac OS
 * brew install sdl2
 
-Whisper.cpp its handled by the CMake project.
+** Whisper.cpp its handled by git and the CMake project, as a sub_module **
 
 ### Build the CMake project and build the source.
 ### Download model
