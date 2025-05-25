@@ -58,7 +58,6 @@ public:
 private
     slots:
     void handleMessage(const QString &msg) {
-        qDebug() << "handle mensaje";
     std::cout << msg.toStdString() << std::endl;
     last_transcription = msg;
     emit update();

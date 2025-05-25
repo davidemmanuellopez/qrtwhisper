@@ -34,7 +34,6 @@ void View::bringToFront() {
     hide();
     show();
 
-    qDebug() << "View::bringToFront";
 }
 
 void View::updateLabel(QString& str) {

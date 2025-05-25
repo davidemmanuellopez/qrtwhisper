@@ -12,6 +12,8 @@ System Settings -> Window Behavior-> Focus
 
 * Disable: Click raises active window
 
+In general terms, do you need to make capable that any application can obtain focus, without need of click.
+
 For now the application get focus for every transcription, you cannot hold keyboard focus. This its
 functional for a interview when not its need to use desktop actively.
 
