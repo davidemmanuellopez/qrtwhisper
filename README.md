@@ -24,8 +24,10 @@ The application looks like it. A semi-transparent text over the screen.
 
 ## Instructions
 
+### Install CUDA and NVIDIA driver
 ### Build the project.
-### Download model: sh ./extern/whisper.cpp/models/download-ggml-model.sh base.en
+### Download model
+sh ./extern/whisper.cpp/models/download-ggml-model.sh base.en
 ### create virtual mic with pulse-audio
 
 * pactl load-module module-remap-source     master=alsa_output.usb-Antelope_Audio_ZenGoSC_4501823000211-00.multichannel-output.monitor     source_name=virtmic     source_properties=device.description=Virtual_Microphone
