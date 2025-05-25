@@ -1,7 +1,6 @@
 # A Real time Qt Interface for Whisper.cpp 
 
-A Qt application based on whisper.cpp/examples/stream. The goal its to have a real time transcription (as subtitles)
-of audio output (any app, like youtube, video calls). 
+A Qt application based on whisper.cpp/examples/stream.
 
 Copyright (C) 2025  David Emmanuel Lopez
 
@@ -18,7 +17,8 @@ Copyright (C) 2025  David Emmanuel Lopez
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-Its recommended to have CUDA and nvidia driver installed, for Real time performance.
+The goal of this application its to have a real time transcription (as subtitles)
+of audio output (any app, like youtube, video calls). Its recommended to have CUDA and nvidia driver installed, for Real time performance.
 The project its at early stages. Its alpha version. Its tested on Linux+KDE. 
 
 To allow the app to get focus, you must go:
