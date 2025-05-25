@@ -27,8 +27,18 @@ The application looks like it. A semi-transparent text over the screen.
 ## Instructions
 
 ### Install dependencies
-* Install CUDA and NVIDIA driver
-* Install SDL2
+#### Install CUDA and NVIDIA driver
+https://developer.nvidia.com/cuda-downloads
+#### Install SDL2
+
+On Debian based linux distributions:
+* sudo apt-get install libsdl2-dev
+
+On Fedora Linux:
+* sudo dnf install SDL2 SDL2-devel
+
+Install SDL2 on Mac OS
+* brew install sdl2
 
 Whisper.cpp its handled by the CMake project.
 
