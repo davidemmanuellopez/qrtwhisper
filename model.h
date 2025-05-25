@@ -15,6 +15,8 @@
 #include <QThread>
 #include <QDebug>
 
+#include "config.h"
+
 
 struct whisper_params {
     int32_t n_threads  = std::min(4, (int32_t) std::thread::hardware_concurrency());
@@ -40,7 +42,7 @@ struct whisper_params {
     bool flash_attn    = false;
 
     std::string language  = "en";
-    std::string model     = "/home/david/whisper.cpp/models/ggml-base.en.bin";
+    std::string model     = MODELS_PATH"/ggml-base.en.bin";
     std::string fname_out;
 };
 
@@ -49,10 +51,9 @@ class Model : public QObject {
     Q_OBJECT
 
 public:
-    Model(QObject* parent = nullptr);
+    Model(int mic_dev);
     void start(); // inicia el loop
     QString get_last_transcription(){return last_transcription;}
-
 
 private
     slots:
@@ -76,8 +77,8 @@ class Worker : public QObject
 {
     Q_OBJECT
 public:
-    explicit Worker(QObject *parent = nullptr) : QObject(parent) {setup_capture();}
-    int setup_capture();
+    Worker(int mic_dev) : QObject(nullptr) {setup_capture(mic_dev);}
+    int setup_capture(int mic_dev);
 
 public slots:
     void doWork();

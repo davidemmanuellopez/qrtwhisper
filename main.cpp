@@ -8,7 +8,8 @@
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
-    Model model;
+    int mic_dev = std::stoi(argv[1]);
+    Model model(mic_dev);
     View view;
     Controller controller(&model, &view);
     model.start();  // inicia el loop

@@ -14,8 +14,8 @@
 #include <vector>
 
 
-Model::Model(QObject* parent) : QObject(parent) {
-    Worker *worker = new Worker;
+Model::Model(int mic_dev) : QObject(nullptr) {
+    Worker *worker = new Worker(mic_dev);
     worker->moveToThread(&workerThread);
     connect(worker, &Worker::conditionMessage, this, &Model::handleMessage);
     connect(&workerThread, &QThread::started, worker, &Worker::doWork);
@@ -228,11 +228,12 @@ void Worker::doWork() {
 
 }
 
-int Worker::setup_capture()
+int Worker::setup_capture(int mic_dev)
 {
 
     whisper_params params;
 
+    params.capture_id = mic_dev;
 
     /*
     if (whisper_params_parse(argc, argv, params) == false) {
