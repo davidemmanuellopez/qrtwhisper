@@ -65,7 +65,7 @@ For now, the default used model is base.en.
 
 * pactl load-module module-remap-source     master=alsa_output.usb-Antelope_Audio_ZenGoSC_4501823000211-00.multichannel-output.monitor     source_name=virtmic     source_properties=device.description=Virtual_Microphone
 
-replace master device with our device, use "pactl list short sinks". Put .monitor as suffix.
+replace master device with our device, use "pactl list short sinks" to know it. Put ".monitor" as suffix, like the example.
 
 ### Check available mics
 
