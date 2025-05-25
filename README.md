@@ -55,10 +55,11 @@ for example "./QRTWhisper 1"
 * Improve interfacing for avoid lost of keyboard focus.
 * add mic managment at app, and other settings, to make it working out-fox-the-box.
 * add other methods for show transcriptions, for example a Android app. 
+* create builds for specific CUDA version and platforms (Linux, Windows, MCOS).
 
 ### Support it!
 
-You can sponsor the project.
+You can sponsor the project. Its helps the growth. 
 
 USDT via TRC20:
 
