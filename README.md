@@ -86,7 +86,7 @@ for example "./QRTWhisper 1"
 * Improve interfacing for avoid lost of keyboard focus.
 * add mic managment at app, and other settings, to make it working out-fox-the-box.
 * add other methods for show transcriptions, for example a Android app. 
-* create builds for specific CUDA version and platforms (Linux, Windows, MCOS).
+* create builds for specific CUDA version and platforms (Linux, Windows, MacOS).
 
 ### Support it!
 
