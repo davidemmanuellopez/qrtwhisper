@@ -24,8 +24,13 @@ The application looks like it. A semi-transparent text over the screen.
 
 ## Instructions
 
-### Install CUDA and NVIDIA driver
-### Build the project.
+### Install dependencies
+* Install CUDA and NVIDIA driver
+* Install SDL2
+
+Whisper.cpp its handled by the CMake project.
+
+### Build the CMake project and build the source.
 ### Download model
 sh ./extern/whisper.cpp/models/download-ggml-model.sh base.en
 ### create virtual mic with pulse-audio
