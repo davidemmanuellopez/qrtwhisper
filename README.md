@@ -1,6 +1,6 @@
 # A Real time Qt Interface for Whisper.cpp 
 
-A Qt application based on whisper.cpp/examples/stream.
+A Qt application based on [whisper.cpp/examples/stream](https://github.com/ggml-org/whisper.cpp/tree/master/examples/stream).
 
 Copyright (C) 2025  David Emmanuel Lopez
 
