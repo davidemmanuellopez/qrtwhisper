@@ -43,8 +43,11 @@ Install SDL2 on Mac OS
 ** Whisper.cpp its handled by git and the CMake project, as a sub_module **
 
 ### Build the CMake project and build the source.
-### Download model
-sh ./extern/whisper.cpp/models/download-ggml-model.sh base.en
+### Download models
+
+For now, the default used model is base.en.
+
+* sh ./extern/whisper.cpp/models/download-ggml-model.sh base.en
 ### create virtual mic with pulse-audio
 
 * pactl load-module module-remap-source     master=alsa_output.usb-Antelope_Audio_ZenGoSC_4501823000211-00.multichannel-output.monitor     source_name=virtmic     source_properties=device.description=Virtual_Microphone
