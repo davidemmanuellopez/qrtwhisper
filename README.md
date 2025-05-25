@@ -15,6 +15,10 @@ System Settings -> Window Behavior-> Focus
 For now the application get focus for every transcription, you cannot hold keyboard focus. This its
 functional for a interview when not its need to use desktop actively.
 
+### Example
+
+The application looks like it. A semi-transparent text over the screen.
+
 ![example](img.png)
 
 
