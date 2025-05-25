@@ -21,6 +21,7 @@ add_executable(${PROJECT_NAME}
         TransparentLabel.h
 )
 
+add_executable(position  ${CMAKE_SOURCE_DIR}/test/position_linux.cpp)
 
 
 set(GGML_CUDA 1)
@@ -47,6 +48,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE "/home/david/whisper.cpp/ggml
 
 target_include_directories(${PROJECT_NAME} PRIVATE "/home/david/whisper.cpp/ggml/include")
 
+
+target_link_libraries(position PRIVATE Qt6::Widgets)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets)
 target_link_libraries(${PROJECT_NAME} PRIVATE whisper)

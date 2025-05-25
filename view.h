@@ -1,11 +1,11 @@
 #ifndef VIEW_H
 #define VIEW_H
-
+#include "TransparentWindow.cpp"
 #include <QWidget>
 #include <QLabel>
 #include <QVBoxLayout>
 #include "TransparentLabel.h"
-class View : public QObject {
+class View : public TransparentWindow {
     Q_OBJECT
 
 public:
@@ -13,7 +13,9 @@ public:
 
     void updateLabel(QString&); // interfaz para actualizar la vista
 
-    TransparentLabel* label;
+    QLabel* label;
+
+    void bringToFront();
 };
 
 #endif // VIEW_H

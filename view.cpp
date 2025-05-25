@@ -1,10 +1,44 @@
 #include "view.h"
 
-View::View(QWidget* parent) : QObject(parent) {
-    label = new TransparentLabel();
+View::View(QWidget* parent) : TransparentWindow(parent) {
+    label = new QLabel(this);
+    label->setStyleSheet(
+    "QLabel {"
+    "color: white;"
+    "font-size: 24px;"
+    "background-color: rgba(0, 0, 0, 150);"
+    "padding: 10px;"
+    "border-radius: 5px;"
+    "}"
+    );
+    label->setAlignment(Qt::AlignCenter);
+    label->resize(300, 100);
+    label->move(100, 700);
+    label->setAttribute(Qt::WA_TransparentForMouseEvents);
+
+
+
+}
+
+void View::bringToFront() {
+    if (isMinimized()) {
+        showNormal();
+    }
+    raise();
+    activateWindow();
+
+    if (QWindow* window = windowHandle()) {
+        window->requestActivate();
+    }
+
+    hide();
+    show();
+
+    qDebug() << "View::bringToFront";
 }
 
 void View::updateLabel(QString& str) {
     label->setText(str);
     label->adjustSize();
+    bringToFront();
 }
