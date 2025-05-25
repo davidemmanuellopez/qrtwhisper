@@ -26,7 +26,7 @@ add_executable(${PROJECT_NAME}
         model.cpp model.h
         controller.cpp controller.h
         view.cpp view.h
-        TransparentLabel.h
+        TransparentWindow.cpp
 )
 
 add_executable(sdl_mics  sdl_mics.cpp)

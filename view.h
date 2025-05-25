@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QVBoxLayout>
-#include "TransparentLabel.h"
+#include "test/TransparentLabel.h"
 class View : public TransparentWindow {
     Q_OBJECT
 
