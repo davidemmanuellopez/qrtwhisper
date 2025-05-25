@@ -54,6 +54,11 @@ On Debian based linux distributions:
 * sudo apt-get install libsdl2-dev
 
 ** Whisper.cpp its handled by git and the CMake project, as a submodule **
+#### Install PulseAudio
+On Debian based linux distributions:
+* sudo apt-get install pulseadio pavucontrol
+
+Make the necessary to get it working, service enabling, check devices with pavucontrol.
 
 ### Build the CMake project and build the source.
 ### Download models
