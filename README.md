@@ -50,4 +50,19 @@ use tool sdl_mics at project. Take the number of virtual microphone.
 run the application by "./QRTWhisper [n]", where n its the virtual mic device.
 for example "./QRTWhisper 1"
 
+### Roadmap
+
+* Improve interfacing for avoid lost of keyboard focus.
+* add mic managment at app, and other settings, to make it working out-fox-the-box.
+* add other methods for show transcriptions, for example a Android app. 
+
+### Support it!
+
+You can sponsor the project.
+
+USDT via TRC20:
+
+TFPJT5d3aBoWcPDCGf241MZUen3E9htd23
+
+
 
