@@ -41,6 +41,10 @@ The application looks like it. A semi-transparent text over the screen.
 
 ## Instructions
 
+### Install Qt6-dev
+On Debian based linux distributions:
+* apt install qt6-base-dev
+
 ### Install dependencies
 #### Install CUDA and NVIDIA driver
 https://developer.nvidia.com/cuda-downloads
@@ -48,12 +52,6 @@ https://developer.nvidia.com/cuda-downloads
 
 On Debian based linux distributions:
 * sudo apt-get install libsdl2-dev
-
-On Fedora Linux:
-* sudo dnf install SDL2 SDL2-devel
-
-Install SDL2 on Mac OS
-* brew install sdl2
 
 ** Whisper.cpp its handled by git and the CMake project, as a sub_module **
 
