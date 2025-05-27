@@ -68,3 +68,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE SDL2)
 
 target_link_libraries(sdl_mics PRIVATE SDL2)
 target_link_libraries(tray_app PRIVATE Qt6::Widgets)
+
+file(COPY "${CMAKE_SOURCE_DIR}/tray_icon.png"
+        DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/")
