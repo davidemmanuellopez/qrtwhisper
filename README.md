@@ -17,8 +17,8 @@ Copyright (C) 2025  David Emmanuel Lopez
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-The goal of this application its to have a real time transcription (as subtitles)
-of audio output (any app, like youtube, video calls). Its recommended to have CUDA and nvidia driver installed, for Real time performance.
+The goal of this application its to have a real time transcription (as subtitles) of audio output (any app, like youtube, video calls). Its essentially a accesibility tool. Its recommended to have CUDA and NVIDIA driver installed, for Real time performance. Other GPU+Vulkan its also supported by Whisper.cpp.
+
 The project its at early stages. Its alpha version. Its tested on Linux+KDE. 
 
 To allow the app to get focus, you must go:
@@ -53,7 +53,12 @@ https://developer.nvidia.com/cuda-downloads
 On Debian based linux distributions:
 * sudo apt-get install libsdl2-dev
 
-** Whisper.cpp its handled by git and the CMake project, as a sub_module **
+** Whisper.cpp its handled by git and the CMake project, as a submodule **
+#### Install PulseAudio
+On Debian based linux distributions:
+* sudo apt-get install pulseaudio pavucontrol
+
+Make the necessary to get it working, service enabling, check devices with pavucontrol.
 
 ### Build the CMake project and build the source.
 ### Download models
@@ -65,7 +70,7 @@ For now, the default used model is base.en.
 
 * pactl load-module module-remap-source     master=alsa_output.usb-Antelope_Audio_ZenGoSC_4501823000211-00.multichannel-output.monitor     source_name=virtmic     source_properties=device.description=Virtual_Microphone
 
-replace master device with our device, use "pactl list short sinks". Put .monitor as suffix.
+replace master device with our device, use "pactl list short sinks" to know it. Put ".monitor" as suffix, like the example.
 
 ### Check available mics
 
@@ -81,7 +86,7 @@ for example "./QRTWhisper 1"
 * Improve interfacing for avoid lost of keyboard focus.
 * add mic managment at app, and other settings, to make it working out-fox-the-box.
 * add other methods for show transcriptions, for example a Android app. 
-* create builds for specific CUDA version and platforms (Linux, Windows, MCOS).
+* create builds for specific CUDA version and platforms (Linux, Windows, MacOS).
 
 ### Support it!
 
