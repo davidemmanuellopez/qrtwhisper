@@ -25,11 +25,15 @@ add_executable(${PROJECT_NAME}
         main.cpp
         model.cpp model.h
         controller.cpp controller.h
-        view.cpp view.h
+        TextRender.cpp TextRender.h
         TransparentWindow.cpp
+        View.cpp
+        MainWidget.cpp
+        MainWidget.h
 )
 
-add_executable(sdl_mics  sdl_mics.cpp)
+add_executable(sdl_mics  sdl_mics.cpp
+)
 
 
 set(GGML_CUDA 1)

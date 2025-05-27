@@ -1,6 +1,6 @@
-#include "view.h"
+#include "TextRender.h"
 
-View::View(QWidget* parent) : TransparentWindow(parent) {
+TextRender::TextRender(QWidget* parent) : TransparentWindow(parent) {
     label = new QLabel(this);
     label->setStyleSheet(
     "QLabel {"
@@ -20,7 +20,7 @@ View::View(QWidget* parent) : TransparentWindow(parent) {
 
 }
 
-void View::bringToFront() {
+void TextRender::bringToFront() {
     if (isMinimized()) {
         showNormal();
     }
@@ -36,7 +36,7 @@ void View::bringToFront() {
 
 }
 
-void View::updateLabel(QString& str) {
+void TextRender::updateLabel(QString& str) {
     label->setText(str);
     label->adjustSize();
     bringToFront();

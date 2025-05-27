@@ -51,9 +51,10 @@ class Model : public QObject {
     Q_OBJECT
 
 public:
-    Model(int mic_dev);
-    void start(); // inicia el loop
+    Model();
+    void start(int mic_dev); // inicia el loop
     QString get_last_transcription(){return last_transcription;}
+    std::list<std::pair<int, std::string>> get_mic_devices();
 
 private
     slots:
@@ -62,12 +63,14 @@ private
     last_transcription = msg;
     emit update();
     }
+
     signals:
         void update();
 
 private:
     QThread workerThread;
     QString last_transcription;
+    std::list<std::pair<int, std::string>> mic_devices;
 
 };
 

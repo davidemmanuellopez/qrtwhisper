@@ -3,14 +3,18 @@
 
 #include <QObject>
 
+#include "View.h"
+
 class Model;
-class View;
+class TextRender;
 
 class Controller : public QObject {
     Q_OBJECT
 
 public:
     Controller(Model* model, View* view, QObject* parent = nullptr);
+    void start_main();
+    void start_transcription();
 
 private slots:
     void handleDataUpdate();

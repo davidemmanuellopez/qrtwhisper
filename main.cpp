@@ -1,21 +1,24 @@
 #include <QApplication>
 #include "model.h"
 #include "controller.h"
-#include "view.h"
+#include "TextRender.h"
 #include <QGuiApplication>
 #include <QScreen>
+
+#include "MainWidget.h"
+#include "TrayApp.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
-    int mic_dev = std::stoi(argv[1]);
-    Model model(mic_dev);
+    Model m_model;
     View view;
-    Controller controller(&model, &view);
-    model.start();  // inicia el loop
+    Controller controller(&m_model, &view);
 
     // Mostrar el label
-    view.label->show();
+
+    controller.start_main();
+
     return app.exec();
 }
 
