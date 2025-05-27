@@ -61,6 +61,8 @@ On Debian based linux distributions:
 Make the necessary to get it working, service enabling, check devices with pavucontrol.
 
 ### Build the CMake project and build the source.
+Tested with gcc 14.12 and CUDA 12.9.
+
 ### Download models
 
 For now, the default used model is base.en.
