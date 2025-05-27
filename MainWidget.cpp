@@ -17,6 +17,11 @@ MainWidget::MainWidget() {
     v_layout.addLayout(&layout);
     v_layout.addWidget(&start_button);
     setLayout(&v_layout);
+
+    connect(&start_button, &QPushButton::clicked, [this]() {
+         this->start_button.setEnabled(false);  // Deshabilita el botón
+
+     });;
 }
 
 void MainWidget::add_mic_dev(QString& dev_name) {

@@ -35,7 +35,6 @@ void Controller::start_main() {
         main_widget->add_mic_dev(name);
     }
 
-
     main_widget->show();
 }
 
