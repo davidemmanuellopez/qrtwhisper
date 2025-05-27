@@ -22,6 +22,7 @@ void Model::start(int mic_dev) {
     worker->moveToThread(&workerThread);
     connect(worker, &Worker::conditionMessage, this, &Model::handleMessage);
     connect(&workerThread, &QThread::started, worker, &Worker::doWork);
+    connect(&workerThread, &QThread::finished, worker, &QObject::deleteLater);  // Elimina el Worker
     connect(worker, &Worker::finished, &workerThread, &QThread::quit); // Finaliza el event loop
 
     workerThread.start();
@@ -40,7 +41,9 @@ std::list<std::pair<int, std::string>> Model::get_mic_devices() {
 
 void Model::stop_transcription() {
     worker->stopWork();
-    //workerThread.wait();
+    workerThread.quit();
+    workerThread.wait();
+    qDebug() << "Stopping transcription";
 
 }
 
@@ -248,6 +251,7 @@ void Worker::doWork() {
     whisper_free(ctx);
 
     emit finished();
+    qDebug() << "hilo finalizado";
 }
 
 int Worker::setup_capture(int mic_dev)
