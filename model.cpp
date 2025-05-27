@@ -18,10 +18,11 @@ Model::Model() : QObject(nullptr) {
 }
 
 void Model::start(int mic_dev) {
-    Worker *worker = new Worker(mic_dev);
+    worker = new Worker(mic_dev);
     worker->moveToThread(&workerThread);
     connect(worker, &Worker::conditionMessage, this, &Model::handleMessage);
     connect(&workerThread, &QThread::started, worker, &Worker::doWork);
+    connect(worker, &Worker::finished, &workerThread, &QThread::quit); // Finaliza el event loop
 
     workerThread.start();
 }
@@ -37,11 +38,17 @@ std::list<std::pair<int, std::string>> Model::get_mic_devices() {
     return mic_devices;
 }
 
+void Model::stop_transcription() {
+    worker->stopWork();
+    //workerThread.wait();
+
+}
+
 
 void Worker::doWork() {
     qDebug() << "Worker: Hilo iniciado en thread" << QThread::currentThreadId();
 
-    while (is_running) {
+    while (is_running && !m_stop) {
         if (params.save_audio) {
             wavWriter.write(pcmf32_new.data(), pcmf32_new.size());
         }
@@ -235,6 +242,12 @@ void Worker::doWork() {
         }
     }
 
+    audio->pause();
+
+    whisper_print_timings(ctx);
+    whisper_free(ctx);
+
+    emit finished();
 }
 
 int Worker::setup_capture(int mic_dev)

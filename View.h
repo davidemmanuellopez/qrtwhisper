@@ -11,14 +11,18 @@
 #include <qt6/QtWidgets/QStackedWidget>
 #include <qt6/QtWidgets/QWidget>
 
+#include "Tray.h"
+
 
 class View : public QObject{
 
 public:
     View();
     QWidget* getWidget(const QString& widget_name);
+    Tray* get_tray(){return tray;};
 private:
     QHash<QString, QWidget*> widgetDictionary;
+    Tray* tray;
 
 };
 

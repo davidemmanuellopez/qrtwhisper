@@ -30,11 +30,14 @@ add_executable(${PROJECT_NAME}
         View.cpp
         MainWidget.cpp
         MainWidget.h
+        Tray.cpp
 )
 
 add_executable(sdl_mics  sdl_mics.cpp
+        Tray.h
 )
 
+add_executable(tray_app tray_app.cpp)
 
 set(GGML_CUDA 1)
 set(CMAKE_CUDA_ARCHITECTURES "86")
@@ -64,3 +67,4 @@ target_link_libraries(${PROJECT_NAME} PRIVATE common)
 target_link_libraries(${PROJECT_NAME} PRIVATE SDL2)
 
 target_link_libraries(sdl_mics PRIVATE SDL2)
+target_link_libraries(tray_app PRIVATE Qt6::Widgets)

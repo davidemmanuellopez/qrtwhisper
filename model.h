@@ -18,6 +18,8 @@
 #include "config.h"
 
 
+class Worker;
+
 struct whisper_params {
     int32_t n_threads  = std::min(4, (int32_t) std::thread::hardware_concurrency());
     int32_t step_ms    = 3000;
@@ -42,7 +44,7 @@ struct whisper_params {
     bool flash_attn    = false;
 
     std::string language  = "en";
-    std::string model     = MODELS_PATH"/ggml-base.en.bin";
+    std::string model     = MODELS_PATH"/ggml-medium.en.bin";
     std::string fname_out;
 };
 
@@ -55,6 +57,7 @@ public:
     void start(int mic_dev); // inicia el loop
     QString get_last_transcription(){return last_transcription;}
     std::list<std::pair<int, std::string>> get_mic_devices();
+    void stop_transcription();
 
 private
     slots:
@@ -68,6 +71,7 @@ private
         void update();
 
 private:
+    Worker* worker;
     QThread workerThread;
     QString last_transcription;
     std::list<std::pair<int, std::string>> mic_devices;
@@ -79,16 +83,21 @@ class Worker : public QObject
 {
     Q_OBJECT
 public:
-    Worker(int mic_dev) : QObject(nullptr) {setup_capture(mic_dev);}
+    Worker(int mic_dev) : QObject(nullptr), m_stop(false) {setup_capture(mic_dev);}
     int setup_capture(int mic_dev);
 
 public slots:
     void doWork();
+    void stopWork() {
+        m_stop = true;
+    }
     signals:
     void conditionMessage(const QString &message);
+    void finished();
 
 private:
 
+    std::atomic<bool> m_stop;
 
     whisper_params params;
     wav_writer wavWriter;
