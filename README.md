@@ -66,7 +66,7 @@ Make the necessary to get it working, service enabling, check devices with pavuc
 For now, the default used model is base.en.
 
 * sh ./extern/whisper.cpp/models/download-ggml-model.sh base.en
-### create virtual mic with pulse-audio
+### Create virtual mic with pulse-audio
 
 * pactl load-module module-remap-source     master=alsa_output.usb-Antelope_Audio_ZenGoSC_4501823000211-00.multichannel-output.monitor     source_name=virtmic     source_properties=device.description=Virtual_Microphone
 
@@ -78,8 +78,7 @@ use tool sdl_mics at project. Take the number of virtual microphone.
 
 ### Start
 
-run the application by "./QRTWhisper [n]", where n its the virtual mic device.
-for example "./QRTWhisper 1"
+run the application by "./QRTWhisper". A Small GUI allow us to select mic device.
 
 ### Roadmap
 
