@@ -65,7 +65,7 @@ Tested with gcc 14.12 and CUDA 12.9.
 
 ### Download models
 
-For now, the default used model is base.en.
+For now, the default used model is medium.en.
 
 * sh ./extern/whisper.cpp/models/download-ggml-model.sh medium.en
 ### Create virtual mic with pulse-audio
