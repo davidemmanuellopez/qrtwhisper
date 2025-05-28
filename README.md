@@ -34,7 +34,7 @@ functional for a interview when not its need to use desktop actively.
 
 ### Example
 
-The application looks like it. A semi-transparent text over the screen. You can see a video demo at [ https://www.youtube.com/watch?v=JTVPFc1cCBk](https://www.youtube.com/watch?v=JTVPFc1cCBk)
+The application looks like it. A semi-transparent text over the screen. You can see a video demo at [ https://www.youtube.com/watch?v=JTVPFc1cCBk](https://www.youtube.com/watch?v=JTVPFc1cCBk).
 
 ![example](img.png)
 
