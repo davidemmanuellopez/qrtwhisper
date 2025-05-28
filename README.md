@@ -49,8 +49,8 @@ On Debian based linux distributions:
 #### Install CUDA and NVIDIA driver
 Follow the instructions in https://developer.nvidia.com/cuda-downloads. For integration in environment (for CUDA 12.9) i add to ~/.bashrc the next:
 
- export PATH="/usr/local/cuda-12.9/bin:$PATH"
- export LD_LIBRARY_PATH="/usr/local/cuda-12.9/lib64:$LD_LIBRARY_PATH"
+ * export PATH="/usr/local/cuda-12.9/bin:$PATH"
+ * export LD_LIBRARY_PATH="/usr/local/cuda-12.9/lib64:$LD_LIBRARY_PATH"
 
 You can also handle it a CMake build, only for the project.
 
