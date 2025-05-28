@@ -67,7 +67,7 @@ Tested with gcc 14.12 and CUDA 12.9.
 
 For now, the default used model is base.en.
 
-* sh ./extern/whisper.cpp/models/download-ggml-model.sh base.en
+* sh ./extern/whisper.cpp/models/download-ggml-model.sh medium.en
 ### Create virtual mic with pulse-audio
 
 * pactl load-module module-remap-source     master=alsa_output.usb-Antelope_Audio_ZenGoSC_4501823000211-00.multichannel-output.monitor     source_name=virtmic     source_properties=device.description=Virtual_Microphone
