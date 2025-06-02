@@ -34,7 +34,7 @@ functional for a interview when not its need to use desktop actively.
 
 ### Example
 
-The application looks like it. A semi-transparent text over the screen.
+The application looks like it. A semi-transparent text over the screen. You can see a video demo at [ https://www.youtube.com/watch?v=JTVPFc1cCBk](https://www.youtube.com/watch?v=JTVPFc1cCBk).
 
 ![example](img.png)
 
@@ -47,7 +47,13 @@ On Debian based linux distributions:
 
 ### Install dependencies
 #### Install CUDA and NVIDIA driver
-https://developer.nvidia.com/cuda-downloads
+Follow the instructions in https://developer.nvidia.com/cuda-downloads. For integration in environment (for CUDA 12.9) i add to ~/.bashrc the next:
+
+ * export PATH="/usr/local/cuda-12.9/bin:$PATH"
+ * export LD_LIBRARY_PATH="/usr/local/cuda-12.9/lib64:$LD_LIBRARY_PATH"
+
+You can also handle it a CMake build, only for the project.
+
 #### Install SDL2
 
 On Debian based linux distributions:
@@ -65,9 +71,9 @@ Tested with gcc 14.12 and CUDA 12.9.
 
 ### Download models
 
-For now, the default used model is base.en.
+For now, the default used model is medium.en.
 
-* sh ./extern/whisper.cpp/models/download-ggml-model.sh base.en
+* sh ./extern/whisper.cpp/models/download-ggml-model.sh medium.en
 ### Create virtual mic with pulse-audio
 
 * pactl load-module module-remap-source     master=alsa_output.usb-Antelope_Audio_ZenGoSC_4501823000211-00.multichannel-output.monitor     source_name=virtmic     source_properties=device.description=Virtual_Microphone
