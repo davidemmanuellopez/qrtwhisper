@@ -42,14 +42,14 @@ void Controller::start_transcription() {
     auto main_widget = (MainWidget*) m_view->getWidget("Main");
     auto dev_id = main_widget->get_device_selected();
     m_model->start(dev_id);
-    m_view->getWidget("TextRender")->show();
+    //m_view->getWidget("TextRender")->show();
     main_widget->hide();
     m_view->get_tray()->show();
-    qDebug() << "star transcription";
 }
 
 void Controller::handleDataUpdate() {
     auto str = m_model->get_last_transcription();
-    auto text_render = (TextRender*) m_view->getWidget("TextRender");
-    text_render->updateLabel(str); // Actualiza la vista
+    //auto text_render = (TextRender*) m_view->getWidget("TextRender");
+    //text_render->updateLabel(str); // Actualiza la vista
+    m_view->get_tray()->showMessage(QString("QRTWhisper"),str);
 }

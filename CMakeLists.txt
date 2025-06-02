@@ -18,8 +18,6 @@ configure_file(
 )
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
-set(SDL2_DIR /usr/lib/x86_64-linux-gnu/cmake/SDL2)
-
 
 add_executable(${PROJECT_NAME}
         main.cpp
@@ -43,7 +41,8 @@ set(GGML_CUDA 1)
 set(CMAKE_CUDA_ARCHITECTURES "86")
 set(WHISPER_SDL2 ON)
 
-set(CMAKE_CUDA_COMPILER /usr/local/cuda-12.9/bin/nvcc)
+#uncomment for hardcode the path to cuda compiler
+#set(CMAKE_CUDA_COMPILER /usr/local/cuda-12.9/bin/nvcc)
 
 add_subdirectory(extern/whisper.cpp)
 
@@ -71,3 +70,26 @@ target_link_libraries(tray_app PRIVATE Qt6::Widgets)
 
 file(COPY "${CMAKE_SOURCE_DIR}/tray_icon.png"
         DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/")
+
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+# Instalar imagen en rutas estándar (Flatpak o sistema tradicional)
+install(FILES tray_icon.png
+        DESTINATION bin  # Para iconos del sistema
+)
+
+# Habilitar CPack para generar .deb
+include(InstallRequiredSystemLibraries)
+set(CPACK_PACKAGE_NAME "qrtwhisper")
+set(CPACK_PACKAGE_VERSION "1.0")
+set(CPACK_PACKAGE_DESCRIPTION "Aplicación con SDL2 y CUDA")
+set(CPACK_PACKAGE_CONTACT "tucorreo@example.com")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Tu Nombre")
+set(CPACK_PACKAGE_VENDOR "TuEmpresa")
+
+# Dependencias del paquete (.deb)
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libsdl2-2.0-0, cuda-runtime-12-9")
+
+# Generador DEB (requiere 'dpkg' instalado)
+set(CPACK_GENERATOR "DEB")
+
+include(CPack)

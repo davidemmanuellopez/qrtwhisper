@@ -43,14 +43,11 @@ void Model::stop_transcription() {
     worker->stopWork();
     workerThread.quit();
     workerThread.wait();
-    qDebug() << "Stopping transcription";
 
 }
 
 
 void Worker::doWork() {
-    qDebug() << "Worker: Hilo iniciado en thread" << QThread::currentThreadId();
-
     while (is_running && !m_stop) {
         if (params.save_audio) {
             wavWriter.write(pcmf32_new.data(), pcmf32_new.size());
@@ -251,7 +248,6 @@ void Worker::doWork() {
     whisper_free(ctx);
 
     emit finished();
-    qDebug() << "hilo finalizado";
 }
 
 int Worker::setup_capture(int mic_dev)
