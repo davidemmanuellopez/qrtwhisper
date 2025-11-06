@@ -8,7 +8,6 @@
 #include <qt6/QtWidgets/QApplication>
 #include <qt6/QtWidgets/QSystemTrayIcon>
 
-
 class Controller;
 
 class Tray : public QSystemTrayIcon {

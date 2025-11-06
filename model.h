@@ -75,6 +75,7 @@ private:
     QThread workerThread;
     QString last_transcription;
     std::list<std::pair<int, std::string>> mic_devices;
+    
 
 };
 

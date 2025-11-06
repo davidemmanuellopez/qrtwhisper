@@ -19,10 +19,11 @@ public:
     void add_mic_dev(QString &dev_name);
     int get_device_selected();
 private:
-    QHBoxLayout layout;
     QVBoxLayout v_layout;
     QComboBox q_device_selection;
     QPushButton start_button;
+    QComboBox q_display_selection;
+
     friend Controller;
 
 };
