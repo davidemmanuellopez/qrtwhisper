@@ -1,12 +1,8 @@
 #include <QApplication>
-#include "model.h"
-#include "controller.h"
-#include "TextRender.h"
-#include <QGuiApplication>
-#include <QScreen>
 
-#include "MainWidget.h"
-#include "TrayApp.h"
+#include "model.h"
+#include "View.h"
+#include "controller.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
@@ -15,10 +11,7 @@ int main(int argc, char *argv[]) {
     View view;
     Controller controller(&m_model, &view);
 
-    // Mostrar el label
-
     controller.start_main();
 
     return app.exec();
 }
-

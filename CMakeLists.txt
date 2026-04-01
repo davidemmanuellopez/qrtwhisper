@@ -22,18 +22,17 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 add_executable(${PROJECT_NAME}
         main.cpp
         model.cpp model.h
+        Worker.cpp Worker.h
+        WhisperParams.h
         controller.cpp controller.h
         TextRender.cpp TextRender.h
-        TransparentWindow.cpp
-        View.cpp
-        MainWidget.cpp
-        MainWidget.h
-        Tray.cpp
+        TransparentWindow.h
+        View.cpp View.h
+        MainWidget.cpp MainWidget.h
+        Tray.cpp Tray.h
 )
 
-add_executable(sdl_mics  sdl_mics.cpp
-        Tray.h
-)
+add_executable(sdl_mics sdl_mics.cpp)
 
 add_executable(tray_app tray_app.cpp)
 

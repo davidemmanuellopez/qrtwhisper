@@ -1,31 +1,25 @@
-//
-// Created by david on 25/05/25.
-//
-
 #ifndef VIEW_H
 #define VIEW_H
 
-#include <qt6/QtCore/qhash.h>
-#include <qt6/QtCore/QObject>
-#include <qt6/QtCore/qstring.h>
-#include <qt6/QtWidgets/QStackedWidget>
-#include <qt6/QtWidgets/QWidget>
+#include <QObject>
 
-#include "Tray.h"
+class MainWidget;
+class TextRender;
+class Tray;
 
-
-class View : public QObject{
+class View : public QObject {
 
 public:
     View();
-    QWidget* getWidget(const QString& widget_name);
-    Tray* get_tray(){return tray;};
-private:
-    QHash<QString, QWidget*> widgetDictionary;
-    Tray* tray;
 
+    MainWidget* getMainWidget()  { return mainWidget; }
+    TextRender* getTextRender()  { return textRender; }
+    Tray*       getTray()        { return tray; }
+
+private:
+    MainWidget* mainWidget;
+    TextRender* textRender;
+    Tray*       tray;
 };
 
-
-
-#endif //VIEW_H
+#endif // VIEW_H
